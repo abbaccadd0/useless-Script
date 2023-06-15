@@ -11,6 +11,8 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
     "%temp%\%uac%.vbs" /f
     del /f /q "%temp%\%uac%.vbs" & exit )
 
+sc stop "wsearch" && sc config "wsearch" start=disabled
+sc delete QPCore
 ipconfig /flushdns
 netsh int ip reset
 netsh winsock reset
