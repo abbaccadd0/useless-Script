@@ -1,6 +1,6 @@
 @echo off
 
-@REM 开始获取管理员权限
+@REM 锟斤拷始锟斤拷取锟斤拷锟斤拷员权锟斤拷
 setlocal
 set uac=~uac_permission_tmp_%random%
 md "%SystemRoot%\system32\%uac%" 2>nul
@@ -16,6 +16,11 @@ sc delete QPCore
 ipconfig /flushdns
 netsh int ip reset
 netsh winsock reset
+netsh int tcp set supplemental Template=Internet CongestionProvider=bbr2
+netsh int tcp set supplemental Template=Datacenter CongestionProvider=bbr2
+netsh int tcp set supplemental Template=Compat CongestionProvider=bbr2
+netsh int tcp set supplemental Template=DatacenterCustom CongestionProvider=bbr2
+netsh int tcp set supplemental Template=InternetCustom CongestionProvider=bbr2
 bcdedit /set useplatformclock false
 DISM.exe /Online /Cleanup-image /Restorehealth
 sfc /scannow
