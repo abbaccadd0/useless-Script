@@ -1,6 +1,7 @@
 @echo off
 
-@REM ��ʼ��ȡ����ԱȨ��
+chcp 65001
+@REM 开始获取管理员权限
 setlocal
 set uac=~uac_permission_tmp_%random%
 md "%SystemRoot%\system32\%uac%" 2>nul

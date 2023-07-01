@@ -1,5 +1,6 @@
 @echo off
 
+chcp 65001
 setlocal
 set uac=~uac_permission_tmp_%random%
 md "%SystemRoot%\system32\%uac%" 2>nul
@@ -12,28 +13,28 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
 endlocal
 
 :start
-echo ĞÇñ·ÌúµÀĞ¡ÖúÊÖ±ã½İ°²×°³ÌÊ½
-echo ±¾ÈË²»ÎªStarRailAssistant±³Êé£¬·´Ö®ÒàÈ»¡£Çë½÷¼ÇÃ×¹şÓÎµÄĞ­Òé£¬¸ãÇå³ş×Ô¼ºÔÚ¸ÉÊ²Ã´¡£
+echo æ˜Ÿç©¹é“é“å°åŠ©æ‰‹ä¾¿æ·å®‰è£…ç¨‹å¼
+echo æœ¬äººä¸ä¸ºStarRailAssistantèƒŒä¹¦ï¼Œåä¹‹äº¦ç„¶ã€‚è¯·è°¨è®°ç±³å“ˆæ¸¸çš„åè®®ï¼Œææ¸…æ¥šè‡ªå·±åœ¨å¹²ä»€ä¹ˆã€‚
 echo ==================
 echo. 
-echo ÊÇ·ñĞèÒªÍ¸¹ıwinget°²×°PythonºÍGit?
+echo æ˜¯å¦éœ€è¦é€è¿‡wingetå®‰è£…Pythonå’ŒGit?
 echo. 
-echo (y)ĞèÒª°²×° (s)¾²Ä¬°²×° (n)²»°²×° (ÆäËû°´¼ü)ÖÕÖ¹Åú´¦Àí
+echo (y)éœ€è¦å®‰è£… (s)é™é»˜å®‰è£… (n)ä¸å®‰è£… (å…¶ä»–æŒ‰é”®)ç»ˆæ­¢æ‰¹å¤„ç†
 echo. 
-set /p mode=ÇëÊäÈë²¢°´ÏÂ»Ø³µ: || set "mode=0"
+set /p mode=è¯·è¾“å…¥å¹¶æŒ‰ä¸‹å›è½¦: || set "mode=0"
 if "%mode%"=="y" (
-    echo ÕıÔÚÍ¸¹ıwinget°²×°PythonºÍGit£¬Çë×¢Òâµ¯³öÀ´µÄ°²×°´°¿Ú
+    echo æ­£åœ¨é€è¿‡wingetå®‰è£…Pythonå’ŒGitï¼Œè¯·æ³¨æ„å¼¹å‡ºæ¥çš„å®‰è£…çª—å£
     winget install -e -i --id=Python.Python.3.11 --source=winget --scope=machine && winget install -e -i --id=Git.Git --source=winget --scope=machine && goto clone
 ) else (
     if "%mode%"=="s" (
-        echo ÕıÔÚÍ¸¹ıwinget¾²Ä¬°²×°PythonºÍGit£¬ËüÃÇ½«±»°²×°ÖÁÄ¬ÈÏÎ»ÖÃ£¬Çë×øºÍ·Å¿í
+        echo æ­£åœ¨é€è¿‡wingeté™é»˜å®‰è£…Pythonå’ŒGitï¼Œå®ƒä»¬å°†è¢«å®‰è£…è‡³é»˜è®¤ä½ç½®ï¼Œè¯·åå’Œæ”¾å®½
         winget install -e -h --id=Python.Python.3.11 --source=winget --scope=machine && winget install -e -h --id=Git.Git --source=winget --scope=machine && goto clone
     ) else (
         if "%mode%"=="n" (
-            echo ½«²»»á½øĞĞ°²×°£¬ÇëÈ·¶¨Äã¾ß±¸ÒªÇóµÄ»·¾³
+            echo å°†ä¸ä¼šè¿›è¡Œå®‰è£…ï¼Œè¯·ç¡®å®šä½ å…·å¤‡è¦æ±‚çš„ç¯å¢ƒ
             goto clone
         ) else (
-            echo ÒÑÖÕÖ¹³ÌÊ½
+            echo å·²ç»ˆæ­¢ç¨‹å¼
             pause
             exit
         )
@@ -49,16 +50,16 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip config set global.extra-index-url "https://mirrors.aliyun.com/pypi/simple/ https://pypi.org/simple/"
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-echo °²×°Íê³É£¬ÕıÔÚ´´½¨¿ì½İ·½Ê½
+echo å®‰è£…å®Œæˆï¼Œæ­£åœ¨åˆ›å»ºå¿«æ·æ–¹å¼
 cd ..
-del /F /Q Æô¶¯StarRailAssistant.bat >nul 2>nul
-cd. > Æô¶¯StarRailAssistant.bat
-echo @echo off > Æô¶¯StarRailAssistant.bat
-echo echo StarRailAssistantÕıÔÚÆô¶¯£¬¸Ã´°¿Ú½«»á¹Ø±Õ£¬²¢À­ÆğPython >> Æô¶¯StarRailAssistant.bat
-echo timeout /t 5 /nobreak ^> nul >> Æô¶¯StarRailAssistant.bat
-echo %%1 mshta vbscript:CreateObject("WScript.Shell").Run("%%~s0 ::",0,FALSE)(window.close)^&^&exit >> Æô¶¯StarRailAssistant.bat
-echo cd /d %~dp0StarRailAssistant\ >> Æô¶¯StarRailAssistant.bat
-echo %tmp% >> Æô¶¯StarRailAssistant.bat
-echo ´´½¨Íê³É
+del /F /Q å¯åŠ¨StarRailAssistant.bat >nul 2>nul
+cd. > å¯åŠ¨StarRailAssistant.bat
+echo @echo off > å¯åŠ¨StarRailAssistant.bat
+echo echo StarRailAssistantæ­£åœ¨å¯åŠ¨ï¼Œè¯¥çª—å£å°†ä¼šå…³é—­ï¼Œå¹¶æ‹‰èµ·Python >> å¯åŠ¨StarRailAssistant.bat
+echo timeout /t 5 /nobreak ^> nul >> å¯åŠ¨StarRailAssistant.bat
+echo %%1 mshta vbscript:CreateObject("WScript.Shell").Run("%%~s0 ::",0,FALSE)(window.close)^&^&exit >> å¯åŠ¨StarRailAssistant.bat
+echo cd /d %~dp0StarRailAssistant\ >> å¯åŠ¨StarRailAssistant.bat
+echo %tmp% >> å¯åŠ¨StarRailAssistant.bat
+echo åˆ›å»ºå®Œæˆ
 pause
 exit
