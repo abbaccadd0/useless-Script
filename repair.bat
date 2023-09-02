@@ -23,7 +23,7 @@ netsh int tcp set supplemental Template=DatacenterCustom CongestionProvider=bbr2
 netsh int tcp set supplemental Template=InternetCustom CongestionProvider=bbr2
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverride /t REG_DWORD /d 33554432 /f
 bcdedit /deletevalue useplatformclock
-bcdedit /deletevalue  disabledynamictick
+bcdedit /deletevalue disabledynamictick
 DISM.exe /Online /Cleanup-image /Restorehealth
 sfc /scannow
 pause
