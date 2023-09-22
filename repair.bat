@@ -23,7 +23,7 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Mem
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v FeatureSettingsOverride /t REG_DWORD /d 33554435 /f
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v DisableTsx /t REG_DWORD /d 00000000 /f
 bcdedit /deletevalue useplatformclock & bcdedit /deletevalue disabledynamictick
-pause
+@REM pause
 DISM.exe /Online /Cleanup-image /Restorehealth
 sfc /scannow
 pause
