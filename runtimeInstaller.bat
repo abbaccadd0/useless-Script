@@ -39,6 +39,8 @@ winget install --id Microsoft.DotNet.DesktopRuntime.6 --accept-source-agreements
 echo.
 winget install --id Microsoft.DotNet.DesktopRuntime.7 --accept-source-agreements --force -h
 echo.
+winget install --id Microsoft.DotNet.DesktopRuntime.8 --accept-source-agreements --force -h
+echo.
 winget install --id Microsoft.DirectX --accept-source-agreements --force -h
 echo.
 pause
