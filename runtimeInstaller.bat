@@ -10,9 +10,10 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
     "%temp%\%uac%.vbs" /f
     del /f /q "%temp%\%uac%.vbs" & exit )
 
+winget install --id Microsoft.EdgeWebView2Runtime --accept-source-agreements --force -h
+echo.
 winget install --id Microsoft.VCRedist.2005.x86 --accept-source-agreements --force -h
 echo.
-@REM pause
 winget install --id Microsoft.VCRedist.2005.x64 --accept-source-agreements --force -h
 echo.
 winget install --id Microsoft.VCRedist.2008.x86 --accept-source-agreements --force -h
