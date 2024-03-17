@@ -14,9 +14,10 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
 @REM ============
 
 
-echo 安全
+echo 🛡️安全
 echo ============
-echo 注意：你需要想办法关闭Windows Denfeder，才能让这部分的一些内容生效:(
+echo ⚠️你需要想办法关闭Windows Denfeder和智能应用控制，才能让这部分的一些内容生效🤔
+echo=
 echo 使用最新.NETFramework
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d 00000001 /f >nul
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d 00000001 /f >nul
@@ -54,10 +55,11 @@ echo 删除Windows Defender菜单项
 reg delete "HKCR\*\shellex\ContextMenuHandlers\EPP" /f >nul
 reg delete "HKCR\Directory\shellex\ContextMenuHandlers\EPP" /f >nul
 reg delete "HKCR\Drive\shellex\ContextMenuHandlers\EPP" /f >nul
-echo ============
+echo ////////////
 echo=
+
 echo=
-echo 性能
+echo 🚀性能
 echo ============
 @REM 启用BBR2
 @REM netsh int tcp set supplemental Template=Internet CongestionProvider=bbr2 >nul
@@ -85,10 +87,11 @@ echo 关闭MPO
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Dwm" /v OverlayTestMode /t REG_DWORD /d 5 /f >nul
 echo 删除旧版QQ安全中心服务
 sc delete QPCore >nul
-echo ============
+echo ////////////
 echo=
+
 echo=
-echo 杂项
+echo ⚙️杂项
 echo ============
 echo 解锁RevisionTool限制
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionSubVersion /t REG_SZ /d "ReviOS" /f >nul
@@ -107,21 +110,29 @@ echo 删除右键菜单 - 添加到收藏夹
 reg delete "HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\FavMenu" /f >nul
 echo 删除右键菜单 - 授予访问权限
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" /v "{F81E9010-6EA4-11CE-A7FF-00AA003CA9F6}" /t REG_SZ /d 0 /f >nul
-echo ============
+echo ////////////
+echo=
 
-
-echo 维护
+echo=
+echo 🛠️维护
 echo ============
 echo 重置网络设置
 ipconfig /flushdns >nul & netsh int ip reset >nul & netsh winsock reset >nul
 echo 关闭IPv6
 netsh interface ipv6 set teredo disabled >nul
 netsh interface ipv6 set privacy disabled >nul
-echo DISM与SFC需要更长的时间，不需要的话可以关闭窗口了
+echo ////////////
+echo=
+
+echo=
+echo 🪟系统修复
+echo ============
+echo DISM和SFC需要网络连接以及很长的时间，不需要的话可以关闭窗口了
+echo 按任意键开始
 pause
 DISM.exe /Online /Cleanup-image /Restorehealth
 sfc /scannow
-echo ============
+echo ////////////
 pause
 
 
