@@ -1,5 +1,5 @@
 @echo off
-chcp 65001
+chcp 65001 >nul
 
 @REM 开始获取管理员权限
 setlocal
@@ -11,13 +11,14 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
     echo WScript.Quit >>"%temp%\%uac%.vbs"
     "%temp%\%uac%.vbs" /f
     del /f /q "%temp%\%uac%.vbs" & exit )
-@REM ============
+@REM echo ////////////
 
-
-echo 🛡️安全
-echo ============
-echo ⚠️你需要想办法关闭Windows Denfeder和智能应用控制，才能让这部分的一些内容生效🤔
+chcp 65001 >nul
+echo ⚠️ 你需要想办法关闭Windows Denfeder和智能应用控制，才能让部分内容生效🤔
 echo=
+
+echo 🛡️ 安全
+echo ============
 echo 使用最新.NETFramework
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d 00000001 /f >nul
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d 00000001 /f >nul
@@ -59,7 +60,7 @@ echo ////////////
 echo=
 
 echo=
-echo 🚀性能
+echo 🚀 性能
 echo ============
 @REM 启用BBR2
 @REM netsh int tcp set supplemental Template=Internet CongestionProvider=bbr2 >nul
@@ -91,7 +92,7 @@ echo ////////////
 echo=
 
 echo=
-echo ⚙️杂项
+echo ⚙️ 杂项
 echo ============
 echo 解锁RevisionTool限制
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionSubVersion /t REG_SZ /d "ReviOS" /f >nul
@@ -114,7 +115,7 @@ echo ////////////
 echo=
 
 echo=
-echo 🛠️维护
+echo 🛠️ 维护
 echo ============
 echo 重置网络设置
 ipconfig /flushdns >nul & netsh int ip reset >nul & netsh winsock reset >nul
@@ -125,9 +126,9 @@ echo ////////////
 echo=
 
 echo=
-echo 🪟系统修复
+echo 🪟 系统修复
 echo ============
-echo DISM和SFC需要网络连接以及很长的时间，不需要的话可以关闭窗口了
+echo ⚠️ DISM和SFC需要网络连接以及很长的时间，不需要的话可以关闭窗口了😎
 echo 按任意键开始
 pause
 DISM.exe /Online /Cleanup-image /Restorehealth
