@@ -37,9 +37,13 @@ winget install --id Microsoft.VCRedist.2015+.x64 --accept-source-agreements --fo
 echo.
 winget install --id Microsoft.DotNet.DesktopRuntime.6 --accept-source-agreements --force -h
 echo.
+winget install --id Microsoft.DotNet.DesktopRuntime.6 -a x86 --accept-source-agreements --force -h
+echo.
 winget install --id Microsoft.DotNet.DesktopRuntime.7 --accept-source-agreements --force -h
 echo.
 winget install --id Microsoft.DotNet.DesktopRuntime.8 --accept-source-agreements --force -h
+echo.
+winget install --id Microsoft.DotNet.DesktopRuntime.Preview --accept-source-agreements --force -h
 echo.
 winget install --id Microsoft.DirectX --accept-source-agreements --force -h
 echo.
