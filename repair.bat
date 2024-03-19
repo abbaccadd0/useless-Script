@@ -124,16 +124,20 @@ echo=
 echo ⚙️ 杂项
 echo ============
 echo 关闭提高鼠标精准度
-reg add "HKEY_CURRENT_USER\Control Panel\Mouse" /v MouseSpeed /t REG_SZ /d 0 /f >nul 2>nul
+reg add "HKEY_CURRENT_USER\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d 0 /f >nul 2>nul
 echo 恢复HPET与动态时钟为默认
 bcdedit /deletevalue useplatformclock >nul 2>nul
 bcdedit /deletevalue disabledynamictick >nul 2>nul
 echo 减少关机程序等待时间
-reg add "HKCU\Control Panel\Desktop" /v "HungAppTimeout" /t REG_SZ /d "3000" /f >nul 2>nul
+reg add "HKCU\Control Panel\Desktop" /v "HungAppTimeout" /t REG_SZ /d "2400" /f >nul 2>nul
 echo 解锁RevisionTool限制
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionSubVersion /t REG_SZ /d "ReviOS" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v "EditionSubVersion" /t REG_SZ /d "ReviOS" /f >nul 2>nul
 echo 删除旧版QQ安全中心服务
 sc delete QPCore >nul 2>nul
+echo 删除快捷方式字样
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "link" /t REG_BINARY /d "00000000" /f >nul 2>nul
+echo 提高图标缓存
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "Max Cached Icons" /t REG_SZ /d "8192" /f >nul 2>nul
 echo 删除右键菜单 - 包含到库中
 reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\Library Location" /f >nul 2>nul
 echo 删除右键菜单 - 共享
