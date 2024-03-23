@@ -24,10 +24,11 @@ reg add "HKLM\SOFTWARE\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWO
 reg add "HKLM\SOFTWARE\Wow6432Node\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d "1" /f >nul
 echo 关闭基于虚拟化的安全
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "0" /f >nul
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "EnableVirtualizationBasedSecurity" /t REG_DWORD /d "0" /f >nul
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "RequirePlatformSecurityFeatures" /t REG_DWORD /d "0" /f >nul
-bcdedit.exe /set vsmlaunchtype off >nul
-bcdedit.exe /set hypervisorlaunchtype off >nul
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "EnableVirtualizationBasedSecurity" /f >nul
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "RequirePlatformSecurityFeatures" /f >nul
+bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} loadoptions DISABLE-LSA-ISO,DISABLE-VBS
+bcdedit /set vsmlaunchtype off >nul
+bcdedit /set hypervisorlaunchtype off >nul
 echo 关闭内核完整性
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy" /v "VerifiedAndReputablePolicyState" /t REG_DWORD /d "0" /f >nul
 echo 关闭幽灵熔断、DownFall
@@ -96,7 +97,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "Disab
 echo 关闭Bitlocker
 for %%a in (c d e f g h i j k l m n o p q r s t u v w x y z  ) do (manage-bde.exe -off %%a: >nul 2>nul)
 echo 关闭IPv6转换服务
-sc stop "iphlpsvc" >nul 2>nul
+sc start "iphlpsvc" >nul 2>nul
 sc config "iphlpsvc" start=disabled >nul  2>nul
 echo 关闭MPO
 reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v OverlayTestMode /t REG_DWORD /d 5 /f >nul 2>nul
@@ -170,6 +171,7 @@ echo ============
 echo 关闭IPv6
 netsh interface ipv6 set teredo disabled >nul 2>nul
 netsh interface ipv6 set privacy disabled >nul 2>nul
+PowerShell Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6 >nul 2>nul
 echo 重置网络设置
 ipconfig /flushdns >nul 2>nul
 netsh int ip reset >nul 2>nul
