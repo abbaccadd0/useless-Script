@@ -14,7 +14,7 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul ) else (
 @REM echo ////////////
 
 chcp 65001 >nul
-echo ⚠️ 你需要想办法关闭Windows Denfeder和智能应用控制，才能让部分内容生效🤔
+echo ⚠️ 部分内容需要你想办法关闭Windows Denfeder和智能应用控制才能生效🤔
 echo=
 
 echo 🛡️ 安全
@@ -94,6 +94,10 @@ echo ============
 @REM netsh int tcp set supplemental Template=InternetCustom CongestionProvider=bbr2 >nul 2>nul
 echo 启用TSX指令集
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "DisableTsx" /t REG_DWORD /d "0" /f >nul 2>nul
+echo 启用内存压缩
+PowerShell Enable-MMAgent -mc
+echo 关闭ACPI C2和C3
+reg add "HKLM\SYSTEM\ControlSet001\Control\Processor" /v "Capabilities" /t REG_DWORD /d "0x0007e066" /f >nul 2>nul
 echo 关闭Bitlocker
 for %%a in (c d e f g h i j k l m n o p q r s t u v w x y z  ) do (manage-bde.exe -off %%a: >nul 2>nul)
 echo 关闭IPv6转换服务
@@ -111,10 +115,10 @@ echo 关闭使用情况报告
 wevtutil sl Microsoft-Windows-SleepStudy/Diagnostic /q:false
 wevtutil sl Microsoft-Windows-Kernel-Processor-Power/Diagnostic /q:false
 wevtutil sl Microsoft-Windows-UserModePowerService/Diagnostic /q:false
-reg add "HKLM\SYSTEM\ControlSet001\Services\DPS" /v "Start" /t REG_DWORD /d "4" /f >nul 2>nul
-reg add "HKLM\SYSTEM\ControlSet001\Services\diagsvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>nul
-reg add "HKLM\SYSTEM\ControlSet001\Services\WdiServiceHost" /v "Start" /t REG_DWORD /d "4" /f >nul 2>nul
-reg add "HKLM\SYSTEM\ControlSet001\Services\WdiSystemHost" /v "Start" /t REG_DWORD /d "4" /f >nul 2>nul
+reg add "HKLM\SYSTEM\ControlSet001\Services\DPS" /v "Start" /t REG_DWORD /d "4" /f >NUL 2>nul
+reg add "HKLM\SYSTEM\ControlSet001\Services\diagsvc" /v "Start" /t REG_DWORD /d "4" /f >NUL 2>nul
+reg add "HKLM\SYSTEM\ControlSet001\Services\WdiServiceHost" /v "Start" /t REG_DWORD /d "4" /f >NUL 2>nul
+reg add "HKLM\SYSTEM\ControlSet001\Services\WdiSystemHost" /v "Start" /t REG_DWORD /d "4" /f >NUL 2>nul
 echo 关闭搜索索引
 sc stop "wsearch" >nul 2>nul
 sc config "wsearch" start=disabled >nul 2>nul
@@ -145,15 +149,72 @@ echo 删除快捷方式字样
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "link" /t REG_BINARY /d "00000000" /f >nul 2>nul
 echo 提高图标缓存
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "Max Cached Icons" /t REG_SZ /d "8192" /f >nul 2>nul
+echo 删除右键菜单 - Bitlocker
+reg delete "HKCR\Drive\shell\change-passphrase" /f >nul 2>nul
+reg delete "HKCR\Drive\shell\change-pin" /f >nul 2>nul
+reg delete "HKCR\Drive\shell\encrypt-bde" /f >nul 2>nul
+reg delete "HKCR\Drive\shell\encrypt-bde-elev" /f >nul 2>nul
+reg delete "HKCR\Drive\shell\manage-bde" /f >nul 2>nul
+reg delete "HKCR\Drive\shell\resume-bde" /f >nul 2>nul
+reg delete "HKCR\Drive\shell\resume-bde-elev" /f >nul 2>nul
+@REM reg delete "HKCR\Drive\shell\unlock-bde" /f >nul 2>nul
 echo 删除右键菜单 - 包含到库中
+reg delete "HKCR\*\shellex\ContextMenuHandlers\Library Location" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\Library Location" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\Library Location" /f >nul 2>nul
+reg delete "HKCR\Directory\shellex\ContextMenuHandlers\Library Location" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\Library Location" /f >nul 2>nul
 reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\Library Location" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\Library Location" /f >nul 2>nul
+echo 删除右键菜单 - 工作文件夹
+reg delete "HKCR\*\shellex\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
+reg delete "HKCR\Directory\shellex\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\WorkFolders" /f >nul 2>nul
 echo 删除右键菜单 - 共享
 reg delete "HKCR\*\shellex\ContextMenuHandlers\Sharing" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\Sharing" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\Sharing" /f >nul 2>nul
+reg delete "HKCR\Directory\shellex\ContextMenuHandlers\Sharing" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\Sharing" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\Sharing" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\Sharing" /f >nul 2>nul
+echo 删除右键菜单 - 还原以前的版本
+reg delete "HKCR\*\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+reg delete "HKCR\Directory\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}" /f >nul 2>nul
+echo 删除右键菜单 - 加密
+reg delete "HKCR\*\shellex\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Directory\shellex\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\Open With EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\*\shellex\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Directory\shellex\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\EncryptionMenu" /f >nul 2>nul
 echo 删除右键菜单 - 兼容性疑难解答
 reg delete "HKCR\exefile\shellex\ContextMenuHandlers\Compatibility" /f >nul 2>nul
+reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\Compatibility" /f >nul 2>nul
 echo 删除右键菜单 - 上传到百度网盘
+reg delete "HKCR\*\shellex\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
+reg delete "HKCR\AllFilesystemObjects\shellex\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
 reg delete "HKCR\Directory\shellex\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
-reg delete "HKCR\*\shellex\-ContextMenuHandlers\YunShellExt" /f >nul 2>nul
+reg delete "HKCR\Drive\shellex\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
+reg delete "HKCR\Folder\ShellEx\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
 reg delete "HKCR\lnkfile\shellex\ContextMenuHandlers\YunShellExt" /f >nul 2>nul
 echo 删除右键菜单 - 授予访问权限
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" /v "{F81E9010-6EA4-11CE-A7FF-00AA003CA9F6}" /t REG_SZ /d "0" /f >nul 2>nul
