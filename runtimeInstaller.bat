@@ -46,6 +46,10 @@ winget install --id Microsoft.DotNet.DesktopRuntime.8 --accept-source-agreements
 echo.
 winget install --id Microsoft.DotNet.DesktopRuntime.Preview --accept-source-agreements --force -h
 echo.
+winget install --id Microsoft.XNARedist --accept-source-agreements --force -h
+echo.
 winget install --id Microsoft.DirectX --accept-source-agreements --force -h
+echo.
+winget install --id OpenAL.OpenAL --accept-source-agreements --force -h
 echo.
 pause
