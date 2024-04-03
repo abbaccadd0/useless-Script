@@ -138,7 +138,11 @@ echo 恢复HPET与动态时钟为默认
 bcdedit /deletevalue useplatformclock >nul 2>nul
 bcdedit /deletevalue disabledynamictick >nul 2>nul
 echo 减少关机程序等待时间
-reg add "HKCU\Control Panel\Desktop" /v "HungAppTimeout" /t REG_SZ /d "2400" /f >nul 2>nul
+reg add "HKCU\Control Panel\Desktop" /v "AutoEndTasks" /t REG_SZ /d "1" /f >nul 2>nul
+reg add "HKCU\Control Panel\Desktop" /v "HungAppTimeout" /t REG_SZ /d "1600" /f >nul 2>nul
+reg add "HKCU\Control Panel\Desktop" /v "WaitToKillAppTimeout" /t REG_SZ /d "1600" /f >nul 2>nul
+reg add "HKCU\Control Panel\Desktop" /v "WaitToKillServiceTimeout" /t REG_SZ /d "1600" /f >nul 2>nul
+reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "WaitToKillServiceTimeout" /t REG_SZ /d "1600" /f >nul 2>nul
 echo 解锁RevisionTool限制
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v "EditionSubVersion" /t REG_SZ /d "ReviOS" /f >nul 2>nul
 echo 开启蓝屏自动重启
