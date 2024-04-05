@@ -132,6 +132,8 @@ echo=
 echo=
 echo ⚙️ 杂项
 echo ============
+echo 关闭iTunes自动备份
+iTunes.exe /setPrefInt DeviceBackupsDisabled 1
 echo 关闭提高鼠标精准度
 reg add "HKEY_CURRENT_USER\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >nul 2>nul
 echo 恢复HPET与动态时钟为默认
