@@ -251,6 +251,9 @@ rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\DawnGraphiteCache" >nu
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\DawnWebGPUCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\GPUCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\optimization_guide_hint_cache_store" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Shared Dictionary\cache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Service Worker\CacheStorage" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Service Worker\ScriptCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\GraphiteDawnCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\GrShaderCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\ShaderCache" >nul 2>nul
