@@ -243,6 +243,17 @@ echo 重置网络设置
 ipconfig /flushdns >nul 2>nul
 netsh int ip reset >nul 2>nul
 netsh winsock reset >nul 2>nul
+echo 清理Edge缓存
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Code Cache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\DawnCache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\DawnGraphiteCache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\DawnWebGPUCache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\GPUCache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\optimization_guide_hint_cache_store" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\GraphiteDawnCache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\GrShaderCache" >nul 2>nul
+rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\ShaderCache" >nul 2>nul
 echo ////////////
 echo=
 
