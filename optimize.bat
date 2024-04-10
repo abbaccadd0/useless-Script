@@ -244,6 +244,7 @@ ipconfig /flushdns >nul 2>nul
 netsh int ip reset >nul 2>nul
 netsh winsock reset >nul 2>nul
 echo 清理Edge缓存
+taskkill /F /IM "msedge.exe" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Code Cache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\DawnCache" >nul 2>nul
