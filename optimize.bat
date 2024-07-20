@@ -23,9 +23,9 @@ echo 使用最新.NETFramework
 reg add "HKLM\SOFTWARE\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d "1" /f >nul
 reg add "HKLM\SOFTWARE\Wow6432Node\Microsoft\.NETFramework" /v "OnlyUseLatestCLR" /t REG_DWORD /d "1" /f >nul
 echo 关闭基于虚拟化的安全
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "0" /f >nul
-reg delete "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "EnableVirtualizationBasedSecurity" /f >nul
-reg delete "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "RequirePlatformSecurityFeatures" /f >nul
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "0" /f >nul 2>nul
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "EnableVirtualizationBasedSecurity" /t REG_DWORD /d "0" /f >nul 2>nul
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "RequirePlatformSecurityFeatures" /t REG_DWORD /d "0" /f >nul 2>nul
 bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} loadoptions DISABLE-LSA-ISO,DISABLE-VBS
 bcdedit /set vsmlaunchtype off >nul
 bcdedit /set hypervisorlaunchtype off >nul
@@ -103,8 +103,10 @@ for %%a in (c d e f g h i j k l m n o p q r s t u v w x y z  ) do (manage-bde.ex
 echo 关闭IPv6转换服务
 sc start "iphlpsvc" >nul 2>nul
 sc config "iphlpsvc" start=disabled >nul  2>nul
+@REM echo 启用MPO
+@REM reg delete "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v "OverlayTestMode"  /f >nul 2>nul
 echo 关闭MPO
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v OverlayTestMode /t REG_DWORD /d 5 /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v "OverlayTestMode" /t REG_DWORD /d 5 /f >nul 2>nul
 echo 关闭程序兼容性助手
 sc stop "PcaSvc" >nul 2>nul
 sc config "PcaSvc" start=disabled >nul 2>nul
@@ -243,6 +245,8 @@ echo 重置网络设置
 ipconfig /flushdns >nul 2>nul
 netsh int ip reset >nul 2>nul
 netsh winsock reset >nul 2>nul
+echo 重置文件默认夹视图
+reg delete "HKCR\Directory\Background\shellex\ContextMenuHandlers\FavMenu" /v "FolderType" /f >nul 2>nul
 echo 清理Edge缓存
 taskkill /F /IM "msedge.exe" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache" >nul 2>nul

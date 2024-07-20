@@ -10,46 +10,46 @@ if %errorlevel%==0 ( rd "%SystemRoot%\system32\%uac%" >nul 2>nul ) else (
     "%temp%\%uac%.vbs" /f
     del /f /q "%temp%\%uac%.vbs" & exit )
 
-winget install --id Microsoft.EdgeWebView2Runtime --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.EdgeWebView2Runtime
 echo.
-winget install --id Microsoft.VCRedist.2005.x86 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2005.x86
 echo.
-winget install --id Microsoft.VCRedist.2005.x64 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2005.x64
 echo.
-winget install --id Microsoft.VCRedist.2008.x86 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2008.x86
 echo.
-winget install --id Microsoft.VCRedist.2008.x64 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2008.x64
 echo.
-winget install --id Microsoft.VCRedist.2010.x86 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2010.x86
 echo.
-winget install --id Microsoft.VCRedist.2010.x64 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2010.x64
 echo.
-winget install --id Microsoft.VCRedist.2012.x86 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2012.x86
 echo.
-winget install --id Microsoft.VCRedist.2012.x64 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2012.x64
 echo.
-winget install --id Microsoft.VCRedist.2013.x86 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2013.x86
 echo.
-winget install --id Microsoft.VCRedist.2013.x64 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2013.x64
 echo.
-winget install --id Microsoft.VCRedist.2015+.x86 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2015+.x86
 echo.
-winget install --id Microsoft.VCRedist.2015+.x64 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.VCRedist.2015+.x64
 echo.
-winget install --id Microsoft.DotNet.DesktopRuntime.6 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.DotNet.DesktopRuntime.6 -a x86 --uninstall-previous
 echo.
-winget install --id Microsoft.DotNet.DesktopRuntime.6 -a x86 --accept-source-agreements --accept-package-agreements --uninstall-previous --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.DotNet.DesktopRuntime.6 -a x64 --uninstall-previous
 echo.
-winget install --id Microsoft.DotNet.DesktopRuntime.7 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.DotNet.DesktopRuntime.7
 echo.
-winget install --id Microsoft.DotNet.DesktopRuntime.8 --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.DotNet.DesktopRuntime.8
 echo.
-winget install --id Microsoft.DotNet.DesktopRuntime.Preview --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.DotNet.DesktopRuntime.Preview
 echo.
-winget install --id Microsoft.XNARedist --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.XNARedist
 echo.
-winget install --id Microsoft.DirectX --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id Microsoft.DirectX
 echo.
-winget install --id OpenAL.OpenAL --accept-source-agreements --accept-package-agreements --force -h
+winget install --accept-source-agreements --accept-package-agreements --force -h --id OpenAL.OpenAL
 echo.
 pause
