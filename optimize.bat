@@ -76,6 +76,9 @@ reg add "HKLM\SYSTEM\ControlSet001\Control\CI\Policy" /v "VerifiedAndReputablePo
 reg add "HKLM\Software\Microsoft\Windows Defender" /v "PUAProtection" /t REG_DWORD /d "0" /f >nul
 reg add "HKLM\SYSTEM\ControlSet001\Control\CI\Config" /v "VulnerableDriverBlocklistEnable" /t REG_DWORD /d "0" /f >nul
 reg add "HKLM\SYSTEM\ControlSet001\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d "0" /f >nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f >nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows Defender" /v DisableAntiVirus /t REG_DWORD /d 1 /f >nul
+reg add HKLM\System\ControlSet001\Services\MDCoreSvc /v Start /t REG_DWORD /d 4 /f >nul
 echo 删除Windows Defender菜单项
 reg delete "HKCR\*\shellex\ContextMenuHandlers\EPP" /f >nul 2>nul
 reg delete "HKCR\Directory\shellex\ContextMenuHandlers\EPP" /f >nul 2>nul
@@ -128,6 +131,8 @@ echo 文件系统 - 禁用8.3命名
 fsutil behavior set disable8dot3 1 >nul 2>nul
 echo 文件系统 - 禁用上次访问时间
 fsutil behavior set disableLastAccess 1 >nul 2>nul
+echo 增加NTFS分页池内存限制
+fsutil behavior set memoryusage 2 >nul 2>nul
 echo ////////////
 echo=
 
@@ -149,6 +154,7 @@ reg add "HKCU\Control Panel\Desktop" /v "WaitToKillServiceTimeout" /t REG_SZ /d 
 reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "WaitToKillServiceTimeout" /t REG_SZ /d "1600" /f >nul 2>nul
 echo 解锁RevisionTool限制
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v "EditionSubVersion" /t REG_SZ /d "ReviOS" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages\Revision-ReviOS" /v "EditionSubVersion" /t REG_SZ /d "ReviOS" /f >nul 2>nul
 echo 开启蓝屏自动重启
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\CrashControl" /v "AutoReboot" /t REG_DWORD /d "1" /f >nul 2>nul
 echo 删除旧版QQ安全中心服务
@@ -262,6 +268,21 @@ rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Service Worker\ScriptC
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\GraphiteDawnCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\GrShaderCache" >nul 2>nul
 rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\ShaderCache" >nul 2>nul
+echo 伪造MDM-Enrollment
+reg add "HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "EnrollmentState" /t REG_DWORD /d "1" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "EnrollmentType" /t REG_DWORD /d "0" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Enrollments\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "IsFederated" /t REG_DWORD /d "0" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "Flags" /t REG_DWORD /d "00d6fb7f" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "AcctUId" /t REG_SZ /d "0x000000000000000000000000000000000000000000000000000000000000000000000000" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "RoamingCount" /t REG_DWORD /d "0" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "SslClientCertReference" /t REG_SZ /d "MY;User;0000000000000000000000000000000000000000" /f >nul 2>nul
+reg add "HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF" /v "ProtoVer" /t REG_SZ /d "1.2" /f >nul 2>nul
+
+
+
+
+echo 增加单进程可用内存量
+bcdedit /set increaseuserva 8192 >nul 2>nul
 echo ////////////
 echo=
 
